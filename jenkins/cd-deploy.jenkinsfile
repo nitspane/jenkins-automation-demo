@@ -34,7 +34,7 @@ pipeline {
                                     -Dcloudhub.application.name=${pom.artifactId} \
                                     -Dcloudhub.environment=SANDBOX \
                                     //-Dbusiness.group.name=MuleSoft \
-                                    -Dartifact.path=target/dependency/${pom.artifactId}-$RELEASE_VERSION-mule-application.jar \
+                                   // -Dartifact.path=target/dependency/${pom.artifactId}-$RELEASE_VERSION-mule-application.jar \
                                     -Dcloudhub.workers=1 \
                                     -Dcloudhub.worker.type=MICRO \
                                     -Dcloudhub.region=us-east-2 \
