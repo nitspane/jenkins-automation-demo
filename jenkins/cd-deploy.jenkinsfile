@@ -1,9 +1,7 @@
 #!groovy
 pipeline {
     agent any
-    options {
-        skipDefaultCheckout true
-    }
+  
           
         stage('Deploy to Testing') {
           
@@ -50,65 +48,6 @@ pipeline {
                 }
             }
         }
-        stage('Run Integration Tests on Testing') {
-            when {
-                expression { params.ENVIRONMENT == 'Testing' }
-            }
-            steps {
-                script {
-                    echo "Running Integration Tests on Development..."
-                    def pom = readMavenPom file: 'pom.xml'
-                    print "POM Name: " + pom.name
-                    print "POM artifactId: " + pom.artifactId
-                    print "Mule Runtime: " + pom.properties['app.runtime']
-                    if ( params.ASSET_TYPE == 'API' ) {
-                        def autodis = readJSON file: 'promote-api-output.json'
-                        def index = autodis.environment.values.findIndexOf{ it.key == "auto_api_id" }
-                        print "Autodiscovery API ID: " + autodis.environment.values[index].value
-                        sh """ newman run postman/Jenkins-Demo-Integration-Test.postman_collection.json \
-                                    --env-var anypoint_username=$ANYPOINT_PLATFORM_CREDS_USR \
-                                    --env-var anypoint_password=$ANYPOINT_PLATFORM_CREDS_PSW \
-                                    --env-var anypoint_organisation=MuleSoft \
-                                    --env-var environment=Testing \
-                                    --env-var asset_type=${params.ASSET_TYPE} \
-                                    --env-var target_api_id=${autodis.environment.values[index].value} \
-                                    --env-var client_app_name=${params.CLIENT_APP} \
-                                    --env-var target_application_name=${pom.artifactId}-test-$ASSET_VERSION \
-                                    --disable-unicode """
-                    } else {
-                        sh """ newman run postman/Jenkins-Demo-Integration-Test.postman_collection.json \
-                                    --env-var anypoint_username=$ANYPOINT_PLATFORM_CREDS_USR \
-                                    --env-var anypoint_password=$ANYPOINT_PLATFORM_CREDS_PSW \
-                                    --env-var anypoint_organisation=MuleSoft \
-                                    --env-var environment=Testing \
-                                    --env-var asset_type=${params.ASSET_TYPE} \
-                                    --env-var target_application_name=${pom.artifactId}-test-$ASSET_VERSION \
-                                    --disable-unicode """
-                    }
-                    echo "Running Integration Tests on Testing: ${currentBuild.currentResult}"
-                } 
-            }
-            post {
-                success {
-                    echo "...Running Integration Tests on Testing Succeeded for ${env.BUILD_VERSION}: ${currentBuild.currentResult}"
-                } 
-                failure {
-                    echo "...Running Integration Tests on Testing Failed for ${env.BUILD_VERSION}: ${currentBuild.currentResult}"
-                }
-            }
-        }        
-      
+            
     
-    post {
-        success {
-            echo "All Good: ${env.RELEASE_VERSION}: ${currentBuild.currentResult}"    
-        }
-        failure {
-            echo "Not So Good: ${env.RELEASE_VERSION}: ${currentBuild.currentResult}"
-        }         
-        always {
-            echo "Pipeline result: ${currentBuild.result}"
-            echo "Pipeline currentResult: ${currentBuild.currentResult}"
-        }
-    }  
-
+   
