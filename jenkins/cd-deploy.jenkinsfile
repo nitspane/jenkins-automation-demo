@@ -31,13 +31,7 @@ pipeline {
                                     -Danypoint.password=${ANYPOINT_PLATFORM_CREDS_PSW} \
 								   // -Danypoint.username=np_mule1 \
                                   //  -Danypoint.password=Niharika123* \
-                                    -Dcloudhub.application.name=${pom.artifactId} \
-                                    -Dcloudhub.environment=SANDBOX \  
-                                    -Dcloudhub.workers=1 \
-                                    -Dcloudhub.worker.type=MICRO \
-                                    -Dcloudhub.region=us-east-2 \
-                                    -Danypoint.platform.client.id=${CLIENT_CREDS_USR} \
-                                    -Danypoint.platform.client.secret=${CLIENT_CREDS_PSW}                                 
+                                    -Dcloudhub.application.name=${pom.artifactId} -Dcloudhub.environment=SANDBOX  -Dcloudhub.workers=1 -Dcloudhub.worker.type=MICRO  -Dcloudhub.region=us-east-2  -Danypoint.platform.client.id=${CLIENT_CREDS_USR}  -Danypoint.platform.client.secret=${CLIENT_CREDS_PSW}                                 
                             }							
                     }
                     echo "Artifact Deployed to Testing: ${currentBuild.currentResult}"
