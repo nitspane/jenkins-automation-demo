@@ -12,9 +12,9 @@ pipeline {
                     print "POM groupId: " + pom.groupId
                     print "POM artifactId: " + pom.artifactId
                     //print "Release version: " + params.RELEASE_VERSION             
-                        def autodis = readJSON file: 'promote-api-output.json'
-                        def index = autodis.environment.values.findIndexOf{ it.key == "auto_api_id" }
-                        print "Autodiscovery API ID: " + autodis.environment.values[index].value
+                      //  def autodis = readJSON file: 'promote-api-output.json'
+                       // def index = autodis.environment.values.findIndexOf{ it.key == "auto_api_id" }
+                      //  print "Autodiscovery API ID: " + autodis.environment.values[index].value
                         withMaven(
                             // Default Maven installation declared in the Jenkins "Global Tool Configuration"
                             maven: 'Maven-3.6.3',
@@ -33,7 +33,7 @@ pipeline {
                                     -Dcloudhub.region=us-east-2 \
                                     -Danypoint.platform.client.id=$CLIENT_ID \
                                     -Danypoint.platform.client.secret=$CLIENT_SECRET \
-                                    -Dapi.id=${autodis.environment.values[index].value} """
+                                 //   -Dapi.id=${autodis.environment.values[index].value} """
                             }							
                     }
                     echo "Artifact Deployed to Testing: ${currentBuild.currentResult}"
