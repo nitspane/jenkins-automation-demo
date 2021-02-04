@@ -37,16 +37,17 @@ pipeline {
                             }							
                     }
                     echo "Artifact Deployed to Testing: ${currentBuild.currentResult}"
+					      post {
+							success {
+								echo "...Deploy to Testing Succeeded for ${env.BUILD_VERSION}: ${currentBuild.currentResult}"
+							} 
+							failure {
+								echo "...Deploy to Testing Failed for ${env.BUILD_VERSION}: ${currentBuild.currentResult}"
+							}
+						}					
                 }
             }    
-            post {
-                success {
-                    echo "...Deploy to Testing Succeeded for ${env.BUILD_VERSION}: ${currentBuild.currentResult}"
-                } 
-                failure {
-                    echo "...Deploy to Testing Failed for ${env.BUILD_VERSION}: ${currentBuild.currentResult}"
-                }
-            }
+      
         }
     }        
     
