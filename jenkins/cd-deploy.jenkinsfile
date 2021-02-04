@@ -31,7 +31,7 @@ pipeline {
                                     -Danypoint.password=${ANYPOINT_PLATFORM_CREDS_PSW} \
 								   // -Danypoint.username=np_mule1 \
                                   //  -Danypoint.password=Niharika123* \
-                                    -Dcloudhub.application.name=${pom.artifactId}-test-$ASSET_VERSION \
+                                    -Dcloudhub.application.name=${pom.artifactId} \
                                     -Dcloudhub.environment=SANDBOX \
                                     //-Dbusiness.group.name=MuleSoft \
                                     -Dartifact.path=target/dependency/${pom.artifactId}-$RELEASE_VERSION-mule-application.jar \
