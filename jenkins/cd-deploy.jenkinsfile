@@ -1,8 +1,7 @@
 #!groovy
 pipeline {
     agent any
-  
-          
+           
         stage('Deploy to Testing') {
           
             steps {
