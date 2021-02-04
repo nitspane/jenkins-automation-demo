@@ -17,7 +17,7 @@ pipeline {
                       //  print "Autodiscovery API ID: " + autodis.environment.values[index].value
                         withMaven(
                             // Default Maven installation declared in the Jenkins "Global Tool Configuration"
-                            maven: 'Maven-3.6.3',
+                            maven: 'M3',
                             // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
                             mavenSettingsConfig: '527873a6-b745-4e5d-a996-26e39451845b') {
                                 bat """ mvn --batch-mode mule:deploy \
