@@ -1,6 +1,7 @@
 #!groovy
 pipeline {
     agent any
+	  stages{
            
         stage('Deploy to Testing') {
           
@@ -47,6 +48,6 @@ pipeline {
                 }
             }
         }
-            
+    }        
     
    
