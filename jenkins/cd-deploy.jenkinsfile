@@ -4,8 +4,13 @@ pipeline {
 	  stages{
            
         stage('Deploy to Testing') {
+		    environment {
+			
+			ANYPOINT_PLATFORM_CREDS = credentials('ANYPOINT_CREDS')
+			CLIENT_CREDS = credentials('CLIENT_ID_SECRET')
+			}
           
-            steps {
+            steps {			    
                 script {
                     echo "Starting Deploy to Production..."
                     def pom = readMavenPom file: 'pom.xml'
@@ -21,18 +26,20 @@ pipeline {
                             // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
                             mavenSettingsConfig: '527873a6-b745-4e5d-a996-26e39451845b') {
                                 bat """ mvn --batch-mode mule:deploy \
-                                    -Dmule.env=TEST \
-                                    -Danypoint.username=$ANYPOINT_PLATFORM_CREDS_USR \
-                                    -Danypoint.password=$ANYPOINT_PLATFORM_CREDS_PSW \
+                                    -Dmule.env=SANDBOX \
+                                    -Danypoint.username=${ANYPOINT_PLATFORM_CREDS_USR} \
+                                    -Danypoint.password=${ANYPOINT_PLATFORM_CREDS_PSW} \
+								   // -Danypoint.username=np_mule1 \
+                                  //  -Danypoint.password=Niharika123* \
                                     -Dcloudhub.application.name=${pom.artifactId}-test-$ASSET_VERSION \
                                     -Dcloudhub.environment=SANDBOX \
-                                    -Dbusiness.group.name=MuleSoft \
+                                    //-Dbusiness.group.name=MuleSoft \
                                     -Dartifact.path=target/dependency/${pom.artifactId}-$RELEASE_VERSION-mule-application.jar \
                                     -Dcloudhub.workers=1 \
                                     -Dcloudhub.worker.type=MICRO \
                                     -Dcloudhub.region=us-east-2 \
-                                    -Danypoint.platform.client.id=$CLIENT_ID \
-                                    -Danypoint.platform.client.secret=$CLIENT_SECRET \
+                                    -Danypoint.platform.client.id=${CLIENT_CREDS_USR} \
+                                    -Danypoint.platform.client.secret=${CLIENT_CREDS_PSW} \
                                  //   -Dapi.id=${autodis.environment.values[index].value} """
                             }							
                     }
