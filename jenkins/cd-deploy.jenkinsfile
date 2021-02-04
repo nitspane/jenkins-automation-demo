@@ -111,4 +111,4 @@ pipeline {
             echo "Pipeline currentResult: ${currentBuild.currentResult}"
         }
     }  
-}
+
