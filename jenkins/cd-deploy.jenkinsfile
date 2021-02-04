@@ -32,15 +32,12 @@ pipeline {
 								   // -Danypoint.username=np_mule1 \
                                   //  -Danypoint.password=Niharika123* \
                                     -Dcloudhub.application.name=${pom.artifactId} \
-                                    -Dcloudhub.environment=SANDBOX \
-                                    //-Dbusiness.group.name=MuleSoft \
-                                   // -Dartifact.path=target/dependency/${pom.artifactId}-$RELEASE_VERSION-mule-application.jar \
+                                    -Dcloudhub.environment=SANDBOX \  
                                     -Dcloudhub.workers=1 \
                                     -Dcloudhub.worker.type=MICRO \
                                     -Dcloudhub.region=us-east-2 \
                                     -Danypoint.platform.client.id=${CLIENT_CREDS_USR} \
-                                    -Danypoint.platform.client.secret=${CLIENT_CREDS_PSW} \
-                                 //   -Dapi.id=${autodis.environment.values[index].value} """
+                                    -Danypoint.platform.client.secret=${CLIENT_CREDS_PSW}                                 
                             }							
                     }
                     echo "Artifact Deployed to Testing: ${currentBuild.currentResult}"
