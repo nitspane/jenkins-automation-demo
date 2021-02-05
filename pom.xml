@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mulesoft.services</groupId>
+    <groupId>0166c1b5-939b-4fab-929b-67ae3c817b81</groupId>
     <artifactId>jenkins-demo-flights-api</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>mule-application</packaging>
@@ -21,13 +21,6 @@
         <enable.anypoint.monitoring>true</enable.anypoint.monitoring>
         <skip.deploy.verify>false</skip.deploy.verify>
     </properties>
-
-    <scm>
-        <url>https://github.com/mulesoft-consulting/jenkins-automation-demo.git</url>
-        <connection>scm:git:https://github.com/mulesoft-consulting/jenkins-automation-demo.git</connection>
-        <developerConnection>scm:git:https://github.com/mulesoft-consulting/jenkins-automation-demo.git</developerConnection>
-        <tag>1.0.0</tag>
-    </scm>
 
     <build>
         <plugins>
@@ -117,6 +110,19 @@
             <classifier>mule-plugin</classifier>
         </dependency>
     </dependencies>
-
+    <distributionManagement>
+		<snapshotRepository>
+			<id>Exchange2</id>
+			<name>Exchange Repository</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v1/organizations/${project.groupId}/maven</url>
+			<layout>default</layout>
+		</snapshotRepository>
+		<repository>
+			<id>Exchange2</id>
+			<name>Exchange Repository</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v1/organizations/${project.groupId}/maven</url>
+			<layout>default</layout>
+		</repository>
+ </distributionManagement>
   
 </project>
