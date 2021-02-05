@@ -22,56 +22,98 @@
         <skip.deploy.verify>false</skip.deploy.verify>
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.0.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.mule.tools.maven</groupId>
-                <artifactId>mule-maven-plugin</artifactId>
-                <version>${mule.maven.plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <classifier>mule-application</classifier>
-                    <cloudHubDeployment>
-                        <uri>https://anypoint.mulesoft.com</uri>
-                        <muleVersion>${app.runtime}</muleVersion>
-                        <username>${anypoint.username}</username>
-                        <password>${anypoint.password}</password>
+  <build>
+		<plugins>
+			<plugin>
+	            <groupId>org.mule.tools.maven</groupId>
+	            <artifactId>mule-maven-plugin</artifactId>
+	            <version>${mule.maven.plugin.version}</version>
+	            <extensions>true</extensions>
+	            <configuration>
+	               <classifier>mule-application</classifier>
+	            </configuration>
+	         </plugin>
+	         <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-release-plugin</artifactId>
+	            <version>2.5.3</version>
+	         </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>add-resource</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/app/</directory>
+								</resource>
+								<resource>
+									<directory>src/main/api/</directory>
+								</resource>
+								<resource>
+									<directory>mappings/</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+    <profiles>
+      <profile>
+         <id>ch-profile</id>
+         <activation>
+            <property>
+               <name>deployment</name>
+               <value>cloudhub</value>
+            </property>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.mule.tools.maven</groupId>
+                  <artifactId>mule-maven-plugin</artifactId>
+                  <version>${mule.maven.plugin.version}</version>
+                  <extensions>true</extensions>
+                  <configuration>
+                     <classifier>mule-application</classifier>
+                     <cloudHubDeployment>
+                        <muleVersion>${mule.version}</muleVersion>
+                        <username>${username}</username>
+                        <password>${password}</password>
+                        <businessGroup>${anypoint.business.group}</businessGroup>
                         <applicationName>${cloudhub.application.name}</applicationName>
-                        <environment>${cloudhub.environment}</environment>
-                        <businessGroup>${business.group.name}</businessGroup>
-                        <artifact>${artifact.path}</artifact>
+                        <environment>${environment}</environment>
+                        <region>${cloudhub.region}</region>
                         <workers>${cloudhub.workers}</workers>
                         <workerType>${cloudhub.worker.type}</workerType>
-                        <region>${cloudhub.region}</region>
+                        <deploymentTimeout>${deployment.timeout}</deploymentTimeout>
                         <objectStoreV2>true</objectStoreV2>
-                        <deploymentTimeout>2000000</deploymentTimeout>
-                        <skipDeploymentVerification>${skip.deploy.verify}</skipDeploymentVerification>
                         <properties>
-                            <anypoint.platform.client_id>${anypoint.platform.client.id}</anypoint.platform.client_id>
-                            <anypoint.platform.client_secret>${anypoint.platform.client.secret}</anypoint.platform.client_secret>
-                            <mule.env>${mule.env}</mule.env>
-                            <anypoint.platform.config.analytics.agent.enabled>${enable.anypoint.monitoring}</anypoint.platform.config.analytics.agent.enabled>
-                            <api.id>${api.id}</api.id>
+                           <mule.env>${mule.env}</mule.env>
+                           <https.port>${https.port}</https.port>
+                           <api.id>${api.id}</api.id>
+                           <secure.key>${secure.key}</secure.key>
+                           <anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
+                           <anypoint.platform.config.analytics.agent.header_injection.disabled>false</anypoint.platform.config.analytics.agent.header_injection.disabled>
+                           <anypoint.platform.client_id>${anypoint.client.id}</anypoint.platform.client_id>
+                           <anypoint.platform.client_secret>${anypoint.client.secret}</anypoint.platform.client_secret>
                         </properties>
-                    </cloudHubDeployment>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${maven.release.version}</version>
-                <configuration>
-                    <tagNameFormat>@{project.version}</tagNameFormat>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
+                     </cloudHubDeployment>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
     <dependencies>
         <dependency>
             <groupId>org.mule.connectors</groupId>
