@@ -12,7 +12,6 @@ pipeline {
           
             steps {			    
                 script {
-                    echo "Starting Deploy to Production..."
                     def pom = readMavenPom file: 'pom.xml'
                     print "POM groupId: " + pom.groupId
                     print "POM artifactId: " + pom.artifactId
