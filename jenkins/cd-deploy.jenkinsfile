@@ -16,11 +16,7 @@ pipeline {
                     def pom = readMavenPom file: 'pom.xml'
                     print "POM groupId: " + pom.groupId
                     print "POM artifactId: " + pom.artifactId
-                    //print "Release version: " + params.RELEASE_VERSION             
-                      //  def autodis = readJSON file: 'promote-api-output.json'
-                       // def index = autodis.environment.values.findIndexOf{ it.key == "auto_api_id" }
-                      //  print "Autodiscovery API ID: " + autodis.environment.values[index].value
-                        withMaven(
+                    withMaven(
                             // Default Maven installation declared in the Jenkins "Global Tool Configuration"
                             maven: 'M3',
                             // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
@@ -28,15 +24,7 @@ pipeline {
                                 bat """ mvn --batch-mode mule:deploy -Dmule.env=SANDBOX  -Danypoint.username=${ANYPOINT_PLATFORM_CREDS_USR} -Danypoint.password=${ANYPOINT_PLATFORM_CREDS_PSW} -Dcloudhub.application.name=${pom.artifactId} -Dcloudhub.environment=SANDBOX  -Dcloudhub.workers=1 -Dcloudhub.worker.type=MICRO  -Dcloudhub.region=us-east-2  -Danypoint.platform.client.id=${CLIENT_CREDS_USR}  -Danypoint.platform.client.secret=${CLIENT_CREDS_PSW}                                 
                             }							
                     }
-                    echo "Artifact Deployed to Testing: ${currentBuild.currentResult}"
-					      post {
-							success {
-								echo "...Deploy to Testing Succeeded for ${env.BUILD_VERSION}: ${currentBuild.currentResult}"
-							} 
-							failure {
-								echo "...Deploy to Testing Failed for ${env.BUILD_VERSION}: ${currentBuild.currentResult}"
-							}
-						}					
+            			
                 }
             }    
       
