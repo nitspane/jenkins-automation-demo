@@ -16,8 +16,8 @@ pipeline {
                     print "POM artifactId: " + pom.artifactId
                     withMaven(                          
                             maven: 'M3',                          
-                            mavenSettingsConfig: '527873a6-b745-4e5d-a996-26e39451845b') {
-                                bat "mvn deploy -Dmule.env = 'SANDBOX'  -Danypoint.username=${ANYPOINT_PLATFORM_CREDS_USR} -Danypoint.password=${ANYPOINT_PLATFORM_CREDS_PSW} -Dcloudhub.application.name=${pom.artifactId} -Dcloudhub.environment='SANDBOX'  -Dcloudhub.workers=1 -Dcloudhub.worker.type='MICRO'  -Dcloudhub.region='us-east-2'  -Danypoint.platform.client.id=${CLIENT_CREDS_USR}  -Danypoint.platform.client.secret=${CLIENT_CREDS_PSW}"                               
+                            mavenSettingsConfig: '527873a6-b745-4e5d-a996-26e39451845b') {							
+                                bat "mvn --batch-mode mule:deploy -Dmule.env = 'SANDBOX'  -Danypoint.username=${ANYPOINT_PLATFORM_CREDS_USR} -Danypoint.password=${ANYPOINT_PLATFORM_CREDS_PSW} -Dcloudhub.application.name=${pom.artifactId} -Dcloudhub.environment='SANDBOX'  -Dcloudhub.workers=1 -Dcloudhub.worker.type='MICRO'  -Dcloudhub.region='us-east-2'  -Danypoint.platform.client.id=${CLIENT_CREDS_USR}  -Danypoint.platform.client.secret=${CLIENT_CREDS_PSW}"                               
                             }							
                     }            			
                 }
