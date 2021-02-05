@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>0166c1b5-939b-4fab-929b-67ae3c817b81</groupId>
     <artifactId>jenkins-demo-flights-api</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
     <name>jenkins-demo-flights-api</name>
